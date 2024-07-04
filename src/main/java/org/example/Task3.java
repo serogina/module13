@@ -3,6 +3,8 @@ package org.example;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import org.example.dto.Task;
+import org.example.service.UserService;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -12,10 +14,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Task3 {
-    public static List<Task> getListTask(int userID) {
+    public List<Task> getListTask(int userID) {
         HttpResponse response;
         try {
-            response = Request.sendGetReqest("/users/"+userID+"/todos");
+            response = UserService.sendGetReqest("/users/"+userID+"/todos");
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }

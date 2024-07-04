@@ -3,6 +3,8 @@ package org.example;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import org.example.dto.User;
+import org.example.service.UserService;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -10,12 +12,13 @@ import java.net.http.HttpResponse;
 import java.util.List;
 
 public class Task1 {
-    public static void createUserPOST() {
+    public void createUserPOST() {
         int MAX_ID = 10;
         User user = createUser();
         HttpResponse response;
+        UserService userService = new UserService();
         try {
-            response = Request.sendUserRequest(Request.HttpMethod.POST, user, "");
+            response = userService.createUser(user);
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -32,11 +35,12 @@ public class Task1 {
         } else System.out.println("Error creating user. Status code " + statusCode);
     }
 
-    public static void updateUserPUT(int userID) {
+    public void updateUserPUT(int userID) {
         User user = createUser();
+        UserService userService = new UserService();
         HttpResponse response;
         try {
-            response = Request.sendUserRequest(Request.HttpMethod.PUT, user, "" + userID);
+            response = userService.updateUser(user, userID);
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -53,10 +57,11 @@ public class Task1 {
         } else System.out.println("Error update user. Status code " + statusCode);
     }
 
-    public static void deleteUser(int userID) {
+    public void deleteUser(int userID) {
+        UserService userService = new UserService();
         HttpResponse response;
         try {
-            response = Request.sendUserRequest(Request.HttpMethod.DELETE, null, "" + userID);
+            response = userService.deleteUser(userID);
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -68,10 +73,11 @@ public class Task1 {
             System.out.println("Error delete user. Status code " + statusCode);
         }
 
-    public static void getUserID(int userID) {
+    public void getUserID(int userID) {
+        UserService userService = new UserService();
         HttpResponse response;
         try {
-            response = Request.sendUserRequest(Request.HttpMethod.GET_ID, null, "" + userID);
+            response = userService.getUser_ID(userID);
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -87,10 +93,11 @@ public class Task1 {
         } else System.out.println("Error GET user ID. Status code " + statusCode);
     }
 
-    public static void getUserUsername(String username) {
+    public void getUserUsername(String username) {
+        UserService userService = new UserService();
         HttpResponse response;
         try {
-            response = Request.sendUserRequest(Request.HttpMethod.GET_username, null, username);
+            response = userService.getUser_username(username);
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -109,10 +116,11 @@ public class Task1 {
         } else System.out.println("Error GET username. Status code " + statusCode);
     }
 
-    public static void getUserAll() {
+    public void getUserAll() {
+        UserService userService = new UserService();
         HttpResponse response;
         try {
-            response = Request.sendUserRequest(Request.HttpMethod.GET_ALL, null, "");
+            response = userService.getAllUser();
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }

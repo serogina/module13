@@ -3,6 +3,9 @@ package org.example;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import org.example.dto.Comments;
+import org.example.dto.Post;
+import org.example.service.UserService;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -14,7 +17,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Task2 {
-    public static void getComments (int userID){
+    public void getComments (int userID){
         int postID = getIDPost(userID);
         if (postID >=0) {
             //System.out.println("Max postID (UserID" + userID + ")=" + postID);
@@ -42,7 +45,7 @@ public class Task2 {
     private static int getIDPost(int userID) {
         HttpResponse response;
         try {
-            response = Request.sendGetReqest("/users/"+userID+"/posts");
+            response = UserService.sendGetReqest("/users/"+userID+"/posts");
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -61,7 +64,7 @@ public class Task2 {
     private static List<Comments> listComments(int postID) {
         HttpResponse response;
         try {
-            response = Request.sendGetReqest("/posts/"+postID+"/comments");
+            response = UserService.sendGetReqest("/posts/"+postID+"/comments");
 
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
